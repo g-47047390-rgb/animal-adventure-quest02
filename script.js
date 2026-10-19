@@ -1,7 +1,7 @@
 let playerHP = 100;
 let enemyHP = 100;
 
-function pick(player){
+function pick(player) {
 
     const question1 = {
         question: "25 + 17 = ?",
@@ -29,40 +29,37 @@ function pick(player){
     `;
 }
 
-function attack(correct){
+function attack(correct) {
 
     let ans = document.getElementById("answer").value;
 
-    if(ans === correct){
+    if (ans === correct) {
 
         enemyHP -= 20;
 
         document.getElementById("result").innerHTML =
-        "🔥 Serangan berjaya!";
+            "🔥 Serangan berjaya!";
 
     } else {
 
         playerHP -= 20;
 
         document.getElementById("result").innerHTML =
-        "💥 Musuh menyerang!";
-
+            "💥 Musuh menyerang!";
     }
 
     document.getElementById("playerHP").innerText = playerHP;
     document.getElementById("enemyHP").innerText = enemyHP;
 
-    if(enemyHP <= 0){
+    if (enemyHP <= 0) {
 
         document.getElementById("result").innerHTML =
-        "🏆 Anda Menang!";
-
+            "🏆 Anda Menang!";
     }
 
-    if(playerHP <= 0){
+    if (playerHP <= 0) {
 
         document.getElementById("result").innerHTML =
-        "❌ Anda Kalah!";
-
+            "❌ Anda Kalah!";
     }
 }
