@@ -1,3 +1,4 @@
+alert("VERSI TERKINI");
 let playerHP = 100;
 let enemyHP = 100;
 
