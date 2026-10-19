@@ -1,1 +1,72 @@
-const locations=["Hutan Permulaan","Padang Rumput Hijau","Sungai Kristal","Gua Batu","Gunung Berapi Mini","Tasik Berkabus","Hutan Gelap","Bandar Haiwan Purba","Menara Langit","Istana Penjinak Haiwan"];let player="";function pick(p){player=p;document.getElementById("game").innerHTML=`<h2>${p} dipilih</h2><p>10 lokasi tersedia. Versi asas GitHub Pages sedia untuk dikembangkan.</p><ol>${locations.map(x=>`<li>${x}</li>`).join("")}</ol>`;}
+let playerHP = 100;
+let enemyHP = 100;
+
+function pick(player){
+
+const question1 = {
+    question:"25 + 17 = ?",
+    answer:"42"
+};
+
+document.getElementById("game").innerHTML = `
+<h2>${player} dipilih</h2>
+
+<h3>⚔ Pertempuran Bermula</h3>
+
+<p>HP Pemain: <span id="playerHP">${playerHP}</span></p>
+
+<p>HP Musuh: <span id="enemyHP">${enemyHP}</span></p>
+
+<p>${question1.question}</p>
+
+<input id="answer" type="number">
+
+<button onclick="attack('${question1.answer}')">
+Jawab
+</button>
+
+<div id="result"></div>
+`;
+
+}
+
+function attack(correct){
+
+let ans = document.getElementById("answer").value;
+
+if(ans === correct){
+
+    enemyHP -= 20;
+
+    document.getElementById("result").innerHTML =
+    "🔥 Serangan berjaya!";
+
+}
+else{
+
+    playerHP -= 20;
+
+    document.getElementById("result").innerHTML =
+    "💥 Musuh menyerang!";
+
+}
+
+document.getElementById("playerHP").innerText = playerHP;
+
+document.getElementById("enemyHP").innerText = enemyHP;
+
+if(enemyHP <= 0){
+
+    document.getElementById("result").innerHTML =
+    "🏆 Anda Menang!";
+
+}
+
+if(playerHP <= 0){
+
+    document.getElementById("result").innerHTML =
+    "❌ Anda Kalah!";
+
+}
+
+}
