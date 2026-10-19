@@ -2,97 +2,126 @@ let playerHP = 100;
 let enemyHP = 100;
 
 const questions = [
-    {q:"25 + 17", a:"42"},
-    {q:"56 - 18", a:"38"},
-    {q:"8 x 7", a:"56"},
-    {q:"72 ÷ 8", a:"9"}
+    { q: "2560 + 170", a: "2730" },
+    { q: "56 - 18", a: "38" },
+    { q: "8 x 7", a: "56" },
+    { q: "72 ÷ 8", a: "9" },
+    { q: "125 + 75", a: "200" },
+    { q: "90 - 45", a: "45" },
+    { q: "12 x 6", a: "72" },
+    { q: "81 ÷ 9", a: "9" }
+];
+
+const enemies = [
+    "🐇 Arnab Liar",
+    "🦌 Rusa Hutan",
+    "🐺 Serigala Alpha"
 ];
 
 let currentQuestion;
+let currentEnemy = 0;
+let capturedAnimals = [];
 
-function getQuestion(){
-    currentQuestion =
-    questions[Math.floor(Math.random()*questions.length)];
+function getQuestion() {
+
+    const randomIndex =
+        Math.floor(Math.random() * questions.length);
+
+    currentQuestion = questions[randomIndex];
 
     return currentQuestion;
 }
 
-function pick(player){
+function loadBattle(player) {
 
     let q = getQuestion();
 
-    document.getElementById("game").innerHTML=`
+    document.getElementById("game").innerHTML = `
 
-    <h2>${player} dipilih</h2>
+    <h2>${player}</h2>
 
-    <h3>⚔ Pertempuran Bermula</h3>
+    <h3>⚔ Melawan ${enemies[currentEnemy]}</h3>
 
-    <p>HP Pemain:
+    <p>❤️ HP Pemain:
     <span id="playerHP">${playerHP}</span></p>
 
-    <p>HP Musuh:
+    <p>💀 HP Musuh:
     <span id="enemyHP">${enemyHP}</span></p>
 
     <p id="question">${q.q} = ?</p>
 
-    <input id="answer">
+    <input id="answer" type="number">
 
-    <button onclick="attack()">
+    <button onclick="attack('${player}')">
         Jawab
     </button>
 
     <div id="result"></div>
 
-    `;
+    <hr>
 
+    <h3>🎯 Haiwan Ditangkap</h3>
+
+    <div id="collection">
+        ${capturedAnimals.join("<br>")}
+    </div>
+
+    `;
 }
 
-function attack(){
+function pick(player) {
+
+    playerHP = 100;
+    enemyHP = 100;
+    currentEnemy = 0;
+    capturedAnimals = [];
+
+    window.selectedPlayer = player;
+
+    loadBattle(player);
+}
+
+function attack(player) {
 
     let ans =
-    document.getElementById("answer").value;
+        document.getElementById("answer").value;
 
-    if(ans == currentQuestion.a){
+    if (ans == currentQuestion.a) {
 
         enemyHP -= 20;
 
         document.getElementById("result").innerHTML =
-        "🔥 Serangan berjaya!";
+            "🔥 Serangan berjaya!";
 
-    }else{
+    } else {
 
         playerHP -= 20;
 
         document.getElementById("result").innerHTML =
-        "💥 Musuh menyerang!";
+            "💥 Musuh menyerang!";
     }
 
     document.getElementById("playerHP").innerText =
-    playerHP;
+        playerHP;
 
     document.getElementById("enemyHP").innerText =
-    enemyHP;
+        enemyHP;
 
-    if(enemyHP <= 0){
+    if (enemyHP <= 0) {
 
-        document.getElementById("result").innerHTML =
-        "🏆 Anda Menang!";
+        capturedAnimals.push(enemies[currentEnemy]);
 
-        return;
-    }
+        currentEnemy++;
 
-    if(playerHP <= 0){
+        if (currentEnemy >= enemies.length) {
 
-        document.getElementById("result").innerHTML =
-        "❌ Anda Kalah!";
+            document.getElementById("game").innerHTML = `
 
-        return;
-    }
+            <h2>🏆 Tahniah!</h2>
 
-    let nextQ = getQuestion();
+            <p>Anda berjaya menewaskan semua musuh.</p>
 
-    document.getElementById("question").innerHTML =
-    nextQ.q + " = ?";
+            <h3>Haiwan Ditangkap</h3>
 
-    document.getElementById("answer").value="";
-}
+            <ul>
+                ${capturedAnimals.map(x => `<li>${x}</li>`).join("")}
