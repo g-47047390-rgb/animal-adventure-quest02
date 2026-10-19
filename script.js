@@ -14,44 +14,45 @@ const questions = [
 
 const locations = [
 {
-  name:"🌲 Hutan Permulaan",
-  enemies:["🐇 Arnab Liar","🐿️ Tupai Hutan","🐺 Serigala Alpha"]
+  name: "🌲 Hutan Permulaan",
+  enemies: ["🐇 Arnab Liar", "🐿️ Tupai Hutan", "🐺 Serigala Alpha"]
 },
 {
-  name:"🌿 Padang Rumput Hijau",
-  enemies:["🐐 Kambing Padang","🦌 Rusa Muda","🦬 Bison Hijau"]
+  name: "🌿 Padang Rumput Hijau",
+  enemies: ["🐐 Kambing Padang", "🦌 Rusa Muda", "🦬 Bison Hijau"]
 },
 {
-  name:"💎 Sungai Kristal",
-  enemies:["🐟 Ikan Kristal","🦆 Itik Air","🐊 Buaya Sungai"]
+  name: "💎 Sungai Kristal",
+  enemies: ["🐟 Ikan Kristal", "🦆 Itik Air", "🐊 Buaya Sungai"]
 },
 {
-  name:"🪨 Gua Batu",
-  enemies:["🦇 Kelawar Gelap","🦂 Kala Batu","🦍 Gorilla Gua"]
+  name: "🪨 Gua Batu",
+  enemies: ["🦇 Kelawar Gelap", "🦂 Kala Batu", "🦍 Gorilla Gua"]
+}
+,
+{
+  name: "🌋 Gunung Berapi Mini",
+  enemies: ["🦎 Cicak Lava", "🔥 Salamander Api", "🐉 Drake Berapi"]
 },
 {
-  name:"🌋 Gunung Berapi Mini",
-  enemies:["🦎 Cicak Lava","🔥 Salamander Api","🐉 Drake Berapi"]
+  name: "🌫️ Tasik Berkabus",
+  enemies: ["🐸 Katak Kabus", "🦢 Angsa Putih", "🐍 Ular Air"]
 },
 {
-  name:"🌫️ Tasik Berkabus",
-  enemies:["🐸 Katak Kabus","🦢 Angsa Putih","🐍 Ular Air"]
+  name: "🌳 Hutan Gelap",
+  enemies: ["🕷️ Labah Gelap", "🦉 Burung Hantu", "🐻 Beruang Hutan"]
 },
 {
-  name:"🌳 Hutan Gelap",
-  enemies:["🕷️ Labah Gelap","🦉 Burung Hantu","🐻 Beruang Hutan"]
+  name: "🦕 Bandar Haiwan Purba",
+  enemies: ["🦖 Raptor Purba", "🦕 Triceratops", "🦴 Rex Purba"]
 },
 {
-  name:"🦕 Bandar Haiwan Purba",
-  enemies:["🦖 Raptor Purba","🦕 Triceratops","🦴 Rex Purba"]
+  name: "☁️ Menara Langit",
+  enemies: ["🐦 Helang Muda", "🦅 Helang Langit", "🔥 Phoenix Awan"]
 },
 {
-  name:"☁️ Menara Langit",
-  enemies:["🐦 Helang Muda","🦅 Helang Langit","🔥 Phoenix Awan"]
-},
-{
-  name:"🏰 Istana Penjinak Haiwan",
-  enemies:["🐲 Dragon Guardian","👑 Dragon Elite","🐉 Dragon Emperor"]
+  name: "🏰 Istana Penjinak Haiwan",
+  enemies: ["🐲 Dragon Guardian", "👑 Dragon Elite", "🐉 Dragon Emperor"]
 }
 ];
 
@@ -61,13 +62,14 @@ let currentQuestion;
 let currentIndex = -1;
 let capturedAnimals = [];
 
-function getQuestion(){
+function getQuestion() {
 
   let newIndex;
 
-  do{
+  do {
     newIndex = Math.floor(Math.random() * questions.length);
-  }while(newIndex === currentIndex);
+  }
+  while (newIndex === currentIndex);
 
   currentIndex = newIndex;
   currentQuestion = questions[newIndex];
@@ -75,53 +77,45 @@ function getQuestion(){
   return currentQuestion;
 }
 
-function pick(player){
+function pick(player) {
 
   playerHP = 100;
   enemyHP = 100;
+
   currentLocation = 0;
   currentEnemy = 0;
+
   capturedAnimals = [];
 
   loadBattle(player);
 }
 
-function loadBattle(player){
+function loadBattle(player) {
 
-  let q = getQuestion();
+  const q = getQuestion();
 
-  let enemy =
-  locations[currentLocation].enemies[currentEnemy];
+  const enemy =
+    locations[currentLocation].enemies[currentEnemy];
 
   document.getElementById("game").innerHTML = `
 
     <h2>${player}</h2>
 
-    <h3>
-      📍 Lokasi ${currentLocation + 1}/10
-    </h3>
+    <h3>📍 Lokasi ${currentLocation + 1}/10</h3>
 
-    <h3>
-      ${locations[currentLocation].name}
-    </h3>
+    <h3>${locations[currentLocation].name}</h3>
 
-    <h3>
-      ⚔ Melawan ${enemy}
-    </h3>
+    <h3>⚔ Melawan ${enemy}</h3>
 
-    <p>
-      ❤️ HP Pemain:
+    <p>❤️ HP Pemain:
       <span id="playerHP">${playerHP}</span>
     </p>
 
-    <p>
-      💀 HP Musuh:
+    <p>💀 HP Musuh:
       <span id="enemyHP">${enemyHP}</span>
     </p>
 
-    <p id="question">
-      ${q.q} = ?
-    </p>
+    <p id="question">${q.q} = ?</p>
 
     <input id="answer" type="number">
 
@@ -133,51 +127,46 @@ function loadBattle(player){
 
     <hr>
 
-    <h3>
-      🎯 Haiwan Ditangkap
-    </h3>
+    <h3>🎯 Haiwan Ditangkap</h3>
 
-    <p>
-      ${capturedAnimals.length}/30
-    </p>
+    <p>${capturedAnimals.length}/30</p>
 
     <div>
       ${capturedAnimals.join("<br>")}
     </div>
-
   `;
 }
 
-function attack(player){
+function attack(player) {
 
-  let ans =
-  document.getElementById("answer").value;
+  const ans =
+    document.getElementById("answer").value;
 
-  if(ans == currentQuestion.a){
+  if (ans == currentQuestion.a) {
 
     enemyHP -= 20;
 
     document.getElementById("result").innerHTML =
-    "🔥 Serangan berjaya!";
+      "🔥 Serangan berjaya!";
 
-  }else{
+  } else {
 
     playerHP -= 20;
 
     document.getElementById("result").innerHTML =
-    "💥 Musuh menyerang!";
+      "💥 Musuh menyerang!";
   }
 
   document.getElementById("playerHP").innerText =
-  playerHP;
+    playerHP;
 
   document.getElementById("enemyHP").innerText =
-  enemyHP;
+    enemyHP;
 
-  if(enemyHP <= 0){
+  if (enemyHP <= 0) {
 
-    let defeated =
-    locations[currentLocation].enemies[currentEnemy];
+    const defeated =
+      locations[currentLocation].enemies[currentEnemy];
 
     capturedAnimals.push(defeated);
 
@@ -188,40 +177,31 @@ function attack(player){
 
     currentEnemy++;
 
-    if(currentEnemy >= 3){
+    if (currentEnemy >= 3) {
 
       currentLocation++;
       currentEnemy = 0;
 
-      if(currentLocation >= 10){
+      if (currentLocation >= 10) {
 
         document.getElementById("game").innerHTML = `
 
-          <h1>
-            🏆 ANIMAL TAMER SPECIALIST
-          </h1>
+          <h1>🏆 ANIMAL TAMER SPECIALIST</h1>
 
           <h2>⭐⭐⭐</h2>
 
           <p>
-            Tahniah!
+            Tahniah! Anda berjaya menamatkan semua lokasi.
           </p>
 
           <p>
-            Anda berjaya menangkap semua haiwan.
-          </p>
-
-          <p>
-            Jumlah Haiwan:
+            Jumlah haiwan ditangkap:
             ${capturedAnimals.length}/30
           </p>
-
-          <h3>Senarai Haiwan</h3>
 
           <div>
             ${capturedAnimals.join("<br>")}
           </div>
-
         `;
 
         return;
@@ -230,8 +210,7 @@ function attack(player){
       enemyHP = 100;
 
       alert(
-        "✅ Lokasi selesai!\n\n" +
-        "Menuju ke:\n" +
+        "✅ Lokasi Selesai!\n\nLokasi baharu:\n" +
         locations[currentLocation].name
       );
 
@@ -247,30 +226,29 @@ function attack(player){
     return;
   }
 
-  if(playerHP <= 0){
+  if (playerHP <= 0) {
 
     document.getElementById("game").innerHTML = `
 
       <h1>❌ Anda Kalah</h1>
 
       <p>
-        Haiwan ditangkap:
+        Haiwan Ditangkap:
         ${capturedAnimals.length}/30
       </p>
 
       <button onclick="pick('${player}')">
         Main Semula
       </button>
-
     `;
 
     return;
   }
 
-  let nextQuestion = getQuestion();
+  const nextQuestion = getQuestion();
 
   document.getElementById("question").innerText =
-  nextQuestion.q + " = ?";
+    nextQuestion.q + " = ?";
 
   document.getElementById("answer").value = "";
 }
