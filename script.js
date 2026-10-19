@@ -1,4 +1,4 @@
-alert("VERSI TERKINI");
+alert("NEW VERSION");
 let playerHP = 100;
 let enemyHP = 100;
 
